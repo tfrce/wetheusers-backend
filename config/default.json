@@ -1,4 +1,9 @@
 {
+
+  "APPLICATION": {
+    "API_VERSION": 1
+  },
+
   "SERVER": {
     "URL": "127.0.0.1",
     "PORT": 3200
@@ -8,5 +13,10 @@
     "API_KEY": "",
     "API_URL": "",
     "RATE_LIMIT": 1000
+  },
+
+  "DB": {
+    "TYPE": null,
+    "DIRTY_DB_PATH": null
   }
 }

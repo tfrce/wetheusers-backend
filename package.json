@@ -19,6 +19,7 @@
   "dependencies": {
     "URIjs": "^1.14.1",
     "config": "^1.7.0",
+    "dirty": "^0.9.9",
     "lodash": "^2.4.1",
     "request": "^2.47.0"
   },

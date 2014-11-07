@@ -12,4 +12,10 @@ var signatureSchema = joi.object().keys({
 });
 
 
+var signatureValidationSchema = joi.object().keys({
+  email: joi.string().email().required()
+});
+
+
 module.exports.signatureSchema = signatureSchema;
+module.exports.signatureValidationSchema = signatureValidationSchema;
