@@ -4,6 +4,7 @@
   "description": "Backend services for the We the Users campaign",
   "main": "index.js",
   "scripts": {
+    "start": "node bin/start_server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
