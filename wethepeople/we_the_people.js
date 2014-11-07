@@ -22,7 +22,7 @@ var WeThePeople = function(apiKey, opt_useSandbox, opt_maxRequestsPerMinute) {
 
   var useSandbox = (!lodash.isUndefined(opt_useSandbox) && opt_useSandbox) ? true : false;
   this.baseURI = new URI(
-    useSandbox ? 'http://sandbox.api.whitehouse.gov': 'https://api.whitehouse.gov/v1');
+    useSandbox ? 'http://sandbox.api.whitehouse.gov/v1': 'https://api.whitehouse.gov/v1');
 
   // The API restricts requests to max 1500 per minute. Allow the user to explicitly set the request
   // limit or default to a slightly lower threshold for safety.

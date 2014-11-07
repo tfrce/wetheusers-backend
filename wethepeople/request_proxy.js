@@ -32,7 +32,7 @@ var RequestProxy = function(apiKey, maxRequestsPerMinute) {
  * @param success
  * @param failure
  */
-RequestProxy.prototype.makeRequest = function(method, uri, params, success, failure) {
+RequestProxy.prototype.makeRequest = function(method, uri, params, success, error) {
 
   // TODO(leah): Implement queueing and rate limiting, see:
   //   * https://github.com/jhurliman/node-rate-limiter
@@ -48,9 +48,20 @@ RequestProxy.prototype.makeRequest = function(method, uri, params, success, fail
     options.json = params;
   }
 
-  request(options)
-    .on('response', success)
-    .on('error', failure);
+  if (lodash.isUndefined(error)) {
+    error = function(err) {
+      console.log(err);
+    };
+  }
+
+  request(options, function(err, response, body) {
+    var statusCode = response.statusCode;
+    if (!err && (statusCode >= 200 && statusCode <= 299)) {
+      success(JSON.parse(body));
+    } else {
+      error(err);
+    }
+  });
 };
 
 

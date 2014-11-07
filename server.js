@@ -12,7 +12,6 @@ var defaultOptions = {};
 
 var port = process.env.PORT || serverConfig.get('PORT');
 var server = new hapi.Server(serverConfig.get('URL'), port, defaultOptions);
-console.log('created new server instance [' + server.info.uri + ']');
 server.route(require('./api/routes').routes);
 
 

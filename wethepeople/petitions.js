@@ -8,6 +8,7 @@ var path = require('path');
 var util = require('util');
 
 var APIFacet = require('./api_facet');
+var apiSchema = require('./api_schema');
 
 
 /**
@@ -29,7 +30,8 @@ util.inherits(Petitions, APIFacet);
  * @param failure
  */
 Petitions.prototype.searchPetitions = function(query, success, failure) {
-
+  var uri = this.getURI().segment(1, 'petitions.json').query(query);
+  this.get(uri, success, failure);
 };
 
 
@@ -41,7 +43,7 @@ Petitions.prototype.searchPetitions = function(query, success, failure) {
  * @param failure
  */
 Petitions.prototype.getPetition = function(petitionId, success, failure) {
-  this.get(this.baseURI.segment(petitionId + '.json'), success, failure);
+  this.get(this.getURI().segment(petitionId + '.json'), success, failure);
 };
 
 
@@ -53,8 +55,9 @@ Petitions.prototype.getPetition = function(petitionId, success, failure) {
  * @param success
  * @param failure
  */
-Petitions.prototype.getPetitionSignatures = function(petitionId, query, success, failure) {
-
+Petitions.prototype.getSignatures = function(petitionId, query, success, failure) {
+  var uri = this.getURI().segment(petitionId).segment('signatures.json').query(query);
+  this.get(uri, success, failure);
 };
 
 
