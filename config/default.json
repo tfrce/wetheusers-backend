@@ -1,0 +1,12 @@
+{
+  "SERVER": {
+    "URL": "127.0.0.1",
+    "PORT": 3200
+  },
+
+  "WE_THE_PEOPLE": {
+    "API_KEY": "",
+    "API_URL": "",
+    "RATE_LIMIT": 1000
+  }
+}
