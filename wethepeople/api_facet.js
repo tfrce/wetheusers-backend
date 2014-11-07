@@ -11,7 +11,7 @@ var APIFacet = function(baseURI, requestProxy) {
   events.EventEmitter.call(this);
 
   /**
-   *
+   * The base URI object for this facet, e.g. http://{api_url}/{version}/{collection_name}
    * @type {Object}
    * @private
    */
@@ -43,6 +43,9 @@ APIFacet.prototype.getURI = function() {
 APIFacet.prototype.getAuthenticatedURI = function() {
   return this.baseURI_.clone().addQuery('api_key', this.requestProxy.apiKey);
 };
+
+
+// Helper methods for standard HTTP verbs
 
 
 APIFacet.prototype.get = function(uri, success, failure) {

@@ -29,7 +29,8 @@ util.inherits(Signatures, APIFacet);
  * @param failure
  */
 Signatures.prototype.signPetition = function(signature, success, failure) {
-  this.post(this.getAuthenticatedURI(), signature, success, failure);
+  var uri = this.getAuthenticatedURI().segment(1, 'signatures.json');
+  this.post(uri, signature, success, failure);
 };
 
 

@@ -28,7 +28,8 @@ util.inherits(Validations, APIFacet);
  * @param failure
  */
 Validations.prototype.getValidations = function(query, success, failure) {
-
+  var uri = this.getAuthenticatedURI().segment(1, 'validations.json');
+  this.get(uri, success, failure);
 };
 
 

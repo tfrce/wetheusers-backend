@@ -51,6 +51,13 @@ var signature = joi.object().keys({
 });
 
 
+var validationsQuery = joi.object().keys({
+  petition_id: joi.string(),
+  limit: joi.number().integer().max(1000),
+  offset: joi.number().integer()
+});
+
+
 module.exports.petitionQuery = petitionQuery;
 module.exports.petitionSignaturesQuery = petitionSignaturesQuery;
 module.exports.signature = signature;
