@@ -4,12 +4,15 @@
 
 var config = require('config');
 var hapi = require('hapi');
+var lodash = require('lodash');
 
 var serverConfig = config.get('SERVER');
 
 var defaultOptions = {};
 
-var server = new hapi.Server(serverConfig.URL, serverConfig.PORT, defaultOptions);
+var port = process.env.PORT || serverConfig.get('PORT');
+var server = new hapi.Server(serverConfig.get('URL'), port, defaultOptions);
+console.log('created new server instance [' + server.info.uri + ']');
 server.route(require('./api/routes').routes);
 
 

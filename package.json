@@ -16,11 +16,16 @@
   "bugs": {
     "url": "https://github.com/tfrce/wetheusers-backend/issues"
   },
+  "engines": {
+    "node": "0.10.x"
+  },
   "homepage": "https://github.com/tfrce/wetheusers-backend",
   "dependencies": {
     "URIjs": "^1.14.1",
     "config": "^1.7.0",
     "dirty": "^0.9.9",
+    "hapi": "^7.4.0",
+    "joi": "^4.7.0",
     "lodash": "^2.4.1",
     "request": "^2.47.0"
   },
