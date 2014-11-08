@@ -8,7 +8,9 @@ var lodash = require('lodash');
 
 var serverConfig = config.get('SERVER');
 
-var defaultOptions = {};
+var defaultOptions = {
+  cors: true
+};
 
 var port = process.env.PORT || serverConfig.get('PORT');
 var server = new hapi.Server(serverConfig.get('URL'), port, defaultOptions);

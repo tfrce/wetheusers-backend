@@ -8,7 +8,7 @@ var signatureSchema = joi.object().keys({
   firstName: joi.string().max(50).required(),
   lastName: joi.string().max(50).required(),
   email: joi.string().email().required(),
-  subscribeToEmails: joi.boolean().required()
+  subscribeToEmails: joi.string()
 });
 
 
