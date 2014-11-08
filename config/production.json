@@ -1,6 +1,8 @@
 {
+
   "WE_THE_PEOPLE": {
     "API_KEY": "",
-    "API_URL": "https://api.whitehouse.gov"
+    "API_URL": "https://api.whitehouse.gov/v1"
   }
+
 }

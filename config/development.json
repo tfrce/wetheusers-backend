@@ -2,12 +2,7 @@
 
   "WE_THE_PEOPLE": {
     "API_KEY": "",
-    "API_URL": "http://sandbox.api.whitehouse.gov/"
-  },
-
-  "DB": {
-    "TYPE": "DIRTY",
-    "DIRTY_DB_PATH": "test.db"
+    "API_URL": "http://sandbox.api.whitehouse.gov/v1"
   }
 
 }

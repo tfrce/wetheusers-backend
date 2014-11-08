@@ -40,7 +40,6 @@ var addSignature = function(request, reply) {
 var getSignatureValidationState = function(request, reply) {
 
   var success = function(signature) {
-
     if (!lodash.isUndefined(signature) && signature.isValidated) {
       reply({status: 'success'});
     } else {
