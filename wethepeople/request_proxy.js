@@ -4,6 +4,7 @@
  */
 
 var events = require('events');
+var limiter = require('limiter');
 var lodash = require('lodash');
 var request = require('request');
 
@@ -18,10 +19,16 @@ var RequestProxy = function(apiKey, maxRequestsPerMinute) {
   this.apiKey = apiKey;
 
   /**
-   * The max number of requests to send per minute.
-   * @type {number}
+   * Rate limiter to manage throttling API requests to the WtP API.
+   *
+   * NOTE: There's no persistence guarantee for requests, if the process using this connection goes
+   * down, queued requests will be lost.
+   *
+   * @type {*}
+   * @private
    */
-  this.maxRequestsPerMinute = maxRequestsPerMinute;
+  this.limiter_ = new limiter.RateLimiter(maxRequestsPerMinute, 'minute');
+
 };
 
 
@@ -30,15 +37,26 @@ var RequestProxy = function(apiKey, maxRequestsPerMinute) {
  * @param method
  * @param uri
  * @param success
- * @param failure
+ * @param error
  */
-RequestProxy.prototype.makeRequest = function(method, uri, params, success, failure) {
+RequestProxy.prototype.makeRequest = function(method, uri, params, success, error) {
+  var requestArgs = this.getRequestArgs_(method, uri, params, success, error);
+  this.executeRequest_.apply(this, requestArgs);
+};
 
-  // TODO(leah): Implement queueing and rate limiting, see:
-  //   * https://github.com/jhurliman/node-rate-limiter
-  //   * https://github.com/chilts/oibackoff
-  //   * https://github.com/caolan/async#queue
 
+/**
+ * Makes a cleaned up array of request arguments for the request module to consume.
+ *
+ * @param method
+ * @param uri
+ * @param params
+ * @param success
+ * @param error
+ * @returns {Array}
+ * @private
+ */
+RequestProxy.prototype.getRequestArgs_ = function(method, uri, params, success, error) {
   var options = {
     uri: uri.toString(),
     method: method
@@ -49,23 +67,38 @@ RequestProxy.prototype.makeRequest = function(method, uri, params, success, fail
     options.json = params;
   }
 
-  if (lodash.isUndefined(failure)) {
-    failure = function(err) {
-      console.log(err);
-    };
-  }
+  // Ignore the error by default
+  var error = !lodash.isUndefined(error) ? error : function(err) {};
+  var success = !lodash.isUndefined(success) ? success : function() {};
 
-  request(options, function(err, response, body) {
-    var statusCode = response.statusCode;
-    if (!err && (statusCode >= 200 && statusCode <= 299)) {
-      // For some reason the response from a signatures POST isn't JSON, so check before parsing.
-      if (lodash.isString(body)) {
-        success(JSON.parse(body));
-      } else {
-        success(body);
-      }
+  return [options, success, error];
+};
+
+
+/**
+ * Internal method to execute a request.
+ * @private
+ */
+RequestProxy.prototype.executeRequest_ = function(options, success, error) {
+
+  this.limiter_.removeTokens(1, function(err, remainingRequests) {
+    if (err) {
+      error(err);
     } else {
-      failure(err);
+
+      var requestCallback = function(err, response, body) {
+        var statusCode = response.statusCode;
+        if (!err && (statusCode >= 200 && statusCode <= 299)) {
+          // For some reason the response from a signatures POST isn't JSON, so check before parsing
+          var responseBody = lodash.isString(body) ? JSON.parse(body) : body;
+          success(responseBody);
+        } else {
+          error(err);
+        }
+      };
+
+      request(options, requestCallback);
+
     }
   });
 };

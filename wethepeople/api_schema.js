@@ -61,3 +61,4 @@ var validationsQuery = joi.object().keys({
 module.exports.petitionQuery = petitionQuery;
 module.exports.petitionSignaturesQuery = petitionSignaturesQuery;
 module.exports.signature = signature;
+module.exports.validationsQuery = validationsQuery;

@@ -18,7 +18,7 @@ var APIFacet = function(baseURI, requestProxy) {
   this.baseURI_ = baseURI;
 
   /**
-   *
+   * Proxy object, used to queue and rate limit requests.
    * @type {*}
    */
   this.requestProxy = requestProxy;
