@@ -19,19 +19,19 @@ var apiRoutes = [
     handler: handlers.addSignature,
     config: {
       validate: {
-        payload: validation.signatureSchema
+        payload: validation.signaturePOSTSchema
       }
     }
   },
 
   {
 
-    path: path.join(API_PREFIX, 'signatures/validated/{email}'),
+    path: path.join(API_PREFIX, 'signatures/{email}'),
     method: 'GET',
-    handler: handlers.getSignatureValidationState,
+    handler: handlers.getSignature,
     config: {
       validate: {
-        params: validation.signatureValidationSchema
+        params: validation.signatureGETSchema
       }
     }
 

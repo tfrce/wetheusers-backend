@@ -1,5 +1,11 @@
 {
 
+  "SERVER": {
+    "URL": "0.0.0.0",
+    "PORT": 3200,
+    "ORIGIN_SERVERS": ["*"]
+  },
+
   "WE_THE_PEOPLE": {
     "API_KEY": "",
     "API_URL": "https://api.whitehouse.gov/v1"

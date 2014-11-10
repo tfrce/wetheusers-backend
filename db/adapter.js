@@ -6,23 +6,23 @@ var lodash = require('lodash');
 var redis = require('redis');
 var url = require('url');
 
-var config = require('config').get('REDIS');
+var redisConfig = require('config').get('REDIS');
 var dbUtils = require('./utils');
 
 
 var RedisAdapter = function() {
   var options = {
-    max_attempts: config.get('MAX_ATTEMPTS')
+    max_attempts: redisConfig.get('MAX_ATTEMPTS')
   };
 
   var port, hostname;
-  if (!lodash.isUndefined(process.env.REDISTOGO_URL)) {
-    var rtgURI = url.parse(process.env.REDISTOGO_URL);
-    port = rtgURI.port;
-    hostname = rtgURI.hostname;
+  if (process.env.NODE_ENV === 'production') {
+    var redisURI = url.parse(redisConfig.get('REDIS_URI'));
+    port = redisURI.port;
+    hostname = redisURI.hostname;
   } else {
-    port = config.get('PORT');
-    hostname = config.get('URL');
+    port = redisConfig.get('PORT');
+    hostname = redisConfig.get('URL');
   }
 
   // TODO(leah): per https://github.com/mranney/node_redis/issues/226 connection pooling shouldn't
@@ -32,7 +32,7 @@ var RedisAdapter = function() {
 
 
 /**
- *
+ * Saves the supplied signature object.
  *
  * @param signature
  * @param success
@@ -52,7 +52,7 @@ RedisAdapter.prototype.saveSignature = function(signature, success, failure) {
 
 
 /**
- *
+ * Fetches a signature object for the supplied email address.
  *
  * @param email
  * @param success
@@ -65,7 +65,7 @@ RedisAdapter.prototype.getSignature = function(email, success, failure) {
     if (err) {
       failure(err);
     } else {
-      success(reply);
+      success(JSON.parse(reply));
     }
   });
 };

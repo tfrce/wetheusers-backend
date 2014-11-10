@@ -9,11 +9,13 @@ var lodash = require('lodash');
 var serverConfig = config.get('SERVER');
 
 var defaultOptions = {
-  cors: true
+  // Restrict the server to only accepting connections from the specified servers
+  cors: {
+    origin: serverConfig.get('ORIGIN_SERVERS')
+  }
 };
 
-var port = process.env.PORT || serverConfig.get('PORT');
-var server = new hapi.Server(serverConfig.get('URL'), port, defaultOptions);
+var server = new hapi.Server(serverConfig.get('URL'), serverConfig.get('PORT'), defaultOptions);
 server.route(require('./api/routes').routes);
 
 

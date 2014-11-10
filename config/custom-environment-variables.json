@@ -1,0 +1,11 @@
+{
+
+  "SERVER": {
+     "PORT": "$PORT"
+  },
+
+  "REDIS": {
+    "REDIS_URI": "REDISTOGO_URL"
+  }
+
+}

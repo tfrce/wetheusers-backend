@@ -16,6 +16,7 @@ var signatures = require('../db/signatures');
 var addSignature = function(request, reply) {
 
   var newSignature = request.payload;
+  newSignature.sentToWhiteHouse = false;
   newSignature.isValidated = false;
 
   var success = function() {
@@ -37,15 +38,14 @@ var addSignature = function(request, reply) {
  * @param request
  * @param reply
  */
-var getSignatureValidationState = function(request, reply) {
+var getSignature = function(request, reply) {
 
   var success = function(signature) {
-    if (!lodash.isUndefined(signature) && signature.isValidated) {
-      reply({status: 'success'});
+    if (lodash.isObject(signature)) {
+      reply(signature);
     } else {
       reply(hapi.error.notFound('valid signature not found'));
     }
-
   };
 
   var error = function(err) {
@@ -57,4 +57,4 @@ var getSignatureValidationState = function(request, reply) {
 
 
 module.exports.addSignature = addSignature;
-module.exports.getSignatureValidationState = getSignatureValidationState;
+module.exports.getSignature = getSignature;

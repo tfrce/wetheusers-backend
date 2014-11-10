@@ -4,7 +4,7 @@
 
 var joi = require('joi');
 
-var signatureSchema = joi.object().keys({
+var signaturePOSTSchema = joi.object().keys({
   firstName: joi.string().max(50).required(),
   lastName: joi.string().max(50).required(),
   email: joi.string().email().required(),
@@ -12,10 +12,10 @@ var signatureSchema = joi.object().keys({
 });
 
 
-var signatureValidationSchema = joi.object().keys({
+var signatureGETSchema = joi.object().keys({
   email: joi.string().email().required()
 });
 
 
-module.exports.signatureSchema = signatureSchema;
-module.exports.signatureValidationSchema = signatureValidationSchema;
+module.exports.signaturePOSTSchema = signaturePOSTSchema;
+module.exports.signatureGETSchema = signatureGETSchema;
