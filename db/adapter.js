@@ -5,6 +5,7 @@
 var lodash = require('lodash');
 var redis = require('redis');
 var url = require('url');
+var kue = require('kue')
 
 var redisConfig = require('config').get('REDIS');
 var dbUtils = require('./utils');
@@ -27,7 +28,18 @@ var RedisAdapter = function() {
 
   // TODO(leah): per https://github.com/mranney/node_redis/issues/226 connection pooling shouldn't
   //             be necessary for our use case, so manage a single conn instance.
-  this.client = redis.createClient(port, hostname, options);
+  /**
+   * The underlying Redis client connection.
+   * @type {*}
+   * @private
+   */
+  this.client_ = redis.createClient(port, hostname, options);
+
+  /**
+   * The Kue job queue used to send tasks to the daemon.
+   * @type {Queue}
+   */
+  this.jobQueue = kue.createQueue();
 };
 
 
@@ -41,7 +53,7 @@ var RedisAdapter = function() {
 RedisAdapter.prototype.saveSignature = function(signature, success, failure) {
   var emailHash = dbUtils.hashEmail(signature.email);
 
-  this.client.set(emailHash, JSON.stringify(signature), function(err, reply) {
+  this.client_.set(emailHash, JSON.stringify(signature), function(err, reply) {
     if (err) {
       failure(err);
     } else {
@@ -61,7 +73,7 @@ RedisAdapter.prototype.saveSignature = function(signature, success, failure) {
 RedisAdapter.prototype.getSignature = function(email, success, failure) {
   var emailHash = dbUtils.hashEmail(email);
 
-  this.client.get(emailHash, function(err, reply) {
+  this.client_.get(emailHash, function(err, reply) {
     if (err) {
       failure(err);
     } else {

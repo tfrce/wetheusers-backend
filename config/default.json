@@ -10,6 +10,10 @@
     "ORIGIN_SERVERS": ["*"]
   },
 
+  "DAEMON": {
+    "TIMEOUT": 30000
+  },
+
   "WE_THE_PEOPLE": {
     "API_KEY": "",
     "API_URL": "",
