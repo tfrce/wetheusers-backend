@@ -31,7 +31,8 @@
     "limiter": "^1.0.5",
     "lodash": "^2.4.1",
     "redis": "^0.12.1",
-    "request": "^2.47.0"
+    "request": "^2.47.0",
+    "wethepeople": "^0.1.0"
   },
   "devDependencies": {
     "gulp": "^3.8.10",
