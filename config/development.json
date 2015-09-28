@@ -2,7 +2,11 @@
 
   "WE_THE_PEOPLE": {
     "API_KEY": "",
-    "API_URL": "http://sandbox.api.whitehouse.gov/v1"
+    "API_URL": "http://sandbox.api.whitehouse.gov/v1",
+    "WHITELISTED_PETITIONS": [
+      "4e7b218a4bd504c17a000001",
+      "4e7b21632ee8d04577000000"
+    ]
   }
 
 }
