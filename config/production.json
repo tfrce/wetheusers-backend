@@ -8,7 +8,8 @@
 
   "WE_THE_PEOPLE": {
     "API_KEY": "",
-    "API_URL": "https://api.whitehouse.gov/v1"
+    "API_URL": "https://api.whitehouse.gov/v1",
+    "WHITELISTED_PETITIONS": []
   }
 
 }

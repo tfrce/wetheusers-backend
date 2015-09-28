@@ -17,7 +17,8 @@
   "WE_THE_PEOPLE": {
     "API_KEY": "",
     "API_URL": "",
-    "RATE_LIMIT": 1000
+    "RATE_LIMIT": 1000,
+    "WHITELIST_PETITIONS": true
   },
 
   "REDIS": {
