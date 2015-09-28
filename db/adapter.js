@@ -26,6 +26,7 @@ var RedisAdapter = function() {
     hostname = redisConfig.get('URL');
   }
 
+
   // TODO(leah): per https://github.com/mranney/node_redis/issues/226 connection pooling shouldn't
   //             be necessary for our use case, so manage a single conn instance.
   /**
@@ -39,7 +40,9 @@ var RedisAdapter = function() {
    * The Kue job queue used to send tasks to the daemon.
    * @type {Queue}
    */
-  this.jobQueue = kue.createQueue();
+  this.jobQueue = kue.createQueue({
+    redis: { port: port, host: hostname }
+  });
 };
 
 
