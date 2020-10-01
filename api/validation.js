@@ -7,7 +7,7 @@ var joi = require('joi');
 var signaturePOSTSchema = joi.object().keys({
   firstName: joi.string().max(50).required(),
   lastName: joi.string().max(50).required(),
-  email: joi.string().email().required(),
+  email: joi.string().max(50).email().required(),
   subscribeToEmails: joi.string()
 });
 
